@@ -14,44 +14,58 @@ const clickSound = document.getElementById("clickSound");
 const magicSound = document.getElementById("magicSound");
 const bgMusic = document.getElementById("bgMusic");
 
-// Inicializar texto inicial
-textEl.innerText = texts[0];
-step = 1; // Ya mostramos el primer texto
 
-// Función para iniciar música de fondo
+// Función para iniciar música de fondo (después de la función playSound)
 function startBackgroundMusic() {
     if (!bgMusic) return;
     
-    bgMusic.volume = 0.3;
+    // Configurar música
+    bgMusic.volume = 0.3; // Volumen bajo para no cubrir efectos
     bgMusic.loop = true;
     
+    // Intentar reproducir después de la primera interacción del usuario
     const startMusic = () => {
         bgMusic.play().catch(e => {
-            console.log("Música bloqueada:", e);
+            console.log("Música bloqueada inicialmente:", e);
         });
+        
+        // Remover event listeners después del primer intento
         document.removeEventListener('click', startMusic);
         document.removeEventListener('touchstart', startMusic);
     };
     
+    // Esperar a la primera interacción del usuario
     document.addEventListener('click', startMusic, { once: true });
     document.addEventListener('touchstart', startMusic, { once: true });
+    
+    // También intentar iniciar en el evento de carga
+    window.addEventListener('load', () => {
+        setTimeout(startMusic, 1000);
+    }, { once: true });
 }
+
+// Función para cambiar volumen de música
+function setMusicVolume(volume) {
+    if (bgMusic) {
+        bgMusic.volume = Math.max(0, Math.min(1, volume));
+    }
+}
+
 
 // Pantalla OFF/ON mejorado
 function flicker() {
     document.body.classList.add("screen-off");
     setTimeout(() => {
         document.body.classList.remove("screen-off");
-        createHearts(5);
+        createHearts(5); // Pequeña lluvia al "encender"
     }, 250);
 }
 
 // Sonidos
 function playSound(audioElement, volume = 0.5) {
-    if (!audioElement) return;
     audioElement.currentTime = 0;
     audioElement.volume = volume;
-    audioElement.play().catch(e => console.log("Sonido bloqueado:", e));
+    audioElement.play().catch(e => console.log("Auto-play bloqueado:", e));
 }
 
 // Avanzar paso
@@ -89,6 +103,7 @@ function showButtons() {
         </button>
     `;
     
+    // Animación de entrada de botones
     const buttons = btns.querySelectorAll('button');
     buttons.forEach((btn, i) => {
         btn.style.opacity = '0';
@@ -103,9 +118,12 @@ function showButtons() {
 
 // Botón que escapa mejorado
 function escapeButton(btn) {
+    // Mover el botón al body si aún no está
     if (btn.parentElement !== document.body) {
         const rect = btn.getBoundingClientRect();
         document.body.appendChild(btn);
+
+        // Mantener posición visual al moverlo
         btn.style.left = rect.left + "px";
         btn.style.top = rect.top + "px";
     }
@@ -141,42 +159,44 @@ function acceptLove() {
     playSound(magicSound, 0.7);
     flicker();
     
-    if (typeof confetti === 'function') {
-        confetti({
-            particleCount: 150,
-            spread: 70,
-            origin: { y: 0.6 },
-            colors: ['#ff5e78', '#ffb8c6', '#ff357f', '#ff8fab']
-        });
-    }
+    // Confeti CANVAS-CONFETTI
+    confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#ff5e78', '#ffb8c6', '#ff357f', '#ff8fab']
+    });
     
+    // Efecto en la tarjeta
     card.classList.add("love");
     textEl.innerHTML = "YIJAAAAAAA<br><br>Te amo con todo mi corazón, mi niña bonita<br><br><small>Nos vemos este finde❤️</small>";
     
+    // Limpiar botones
     btns.innerHTML = '';
     
-    if (typeof confetti === 'function') {
-        setTimeout(() => confetti({
-            particleCount: 300,
-            angle: 60,
-            spread: 80,
-            origin: { x: 0 },
-            colors: ['#ff5e78', '#ffb8c6']
-        }), 300);
-        
-        setTimeout(() => confetti({
-            particleCount: 300,
-            angle: 120,
-            spread: 80,
-            origin: { x: 1 },
-            colors: ['#ff357f', '#ff8fab']
-        }), 600);
-    }
+    // Explosión MEGA de corazones
+    setTimeout(() => confetti({
+        particleCount: 300,
+        angle: 60,
+        spread: 80,
+        origin: { x: 0 },
+        colors: ['#ff5e78', '#ffb8c6']
+    }), 300);
     
+    setTimeout(() => confetti({
+        particleCount: 300,
+        angle: 120,
+        spread: 80,
+        origin: { x: 1 },
+        colors: ['#ff357f', '#ff8fab']
+    }), 600);
+    
+    // Lluvia continua
     for(let i = 0; i < 80; i++) {
         setTimeout(() => createHearts(2), i * 100);
     }
     
+    // Corazones gigantes especiales
     createSpecialHearts(3);
 }
 
@@ -187,9 +207,11 @@ function createHearts(count = 1) {
         heart.className = "heart";
         heart.innerHTML = "💖";
         
+        // Posición aleatoria
         heart.style.left = Math.random() * 100 + "vw";
         heart.style.fontSize = Math.random() * 20 + 15 + "px";
         
+        // Animación personalizada
         const duration = Math.random() * 4 + 3;
         heart.style.animation = `floatUp ${duration}s linear forwards`;
         
@@ -198,9 +220,9 @@ function createHearts(count = 1) {
     }
 }
 
-// Corazones especiales gigantes - ERROR CORREGIDO AQUÍ
+// Corazones especiales gigantes
 function createSpecialHearts(count) {
-    const specialHearts = ["💘", "💝", "🕺", "🐺", "💃"];  // CORREGIDO
+    const specialHearts = ["💘", "💝", 🕺", "🐺", "💃"];
     
     for(let i = 0; i < count; i++) {
         setTimeout(() => {
@@ -222,32 +244,37 @@ function createSpecialHearts(count) {
     }
 }
 
-// INICIALIZACIÓN - UNA SOLA VEZ
 document.addEventListener('DOMContentLoaded', () => {
+    // Iniciar música de fondo
     startBackgroundMusic();
     
+    // Lluvia inicial de corazones
     setInterval(() => createHearts(1), 500);
     
+    // Instrucción inicial
     setTimeout(() => {
         const instructions = document.createElement("div");
         instructions.className = "instructions";
         instructions.innerText = "Toca la pantalla para continuar...";
         document.body.appendChild(instructions);
-        
-        setTimeout(() => {
-            if (instructions.parentNode) {
-                instructions.remove();
-            }
-        }, 3000);
     }, 1000);
 });
 
-// Evento para avanzar
+// Lluvia inicial de corazones
+setInterval(() => createHearts(1), 500);
+
 const startEvent = "ontouchstart" in window ? "touchstart" : "click";
+
 document.body.addEventListener(startEvent, (e) => {
     if (step < texts.length && !e.target.closest("button")) {
         nextStep();
     }
 });
 
-
+// Instrucción inicial
+setTimeout(() => {
+    const instructions = document.createElement("div");
+    instructions.className = "instructions";
+    instructions.innerText = "Toca la pantalla para continuar...";
+    document.body.appendChild(instructions);
+}, 1000);
