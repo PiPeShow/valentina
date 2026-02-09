@@ -1,8 +1,9 @@
 const texts = [
-    "Hola mi amor",
-    "¿Sabías que cada día me enamoro más de ti?",
-    "Eres lo más bonito que me ha pasado...",
-    "¿Quieres ser mi 14 de Febrero?"
+    "Pasaba por aquí para preguntarte si...",
+    "Sabías que cada día me enamoro más de ti?",
+    "Y que eres lo más bonito que me ha pasado?",
+    "Entonces mi duda es...",
+    "Quieres ser mi 14 de Febrero?"
 ];
 
 let step = 0;
@@ -228,5 +229,6 @@ setTimeout(() => {
     instructions.innerText = "Toca la pantalla para continuar...";
     document.body.appendChild(instructions);
 }, 1000);
+
 
 
