@@ -1,7 +1,9 @@
 :root {
-    --rosa: #ff5e78;
-    --rosa-suave: #ffb8c6;
-    --sombra: 0 20px 50px rgba(0, 0, 0, 0.3);
+    --accent: #c4455b;        /* rojo vino elegante */
+    --accent-soft: #e6b3bc;   /* solo para detalles */
+    --text-main: #2b2b2b;
+    --text-muted: #666;
+    --shadow-soft: 0 25px 60px rgba(0, 0, 0, 0.15);
 }
 
 * {
@@ -17,13 +19,13 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    background-image: url('../assets/images/snoopy.png');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    transition: filter 0.4s ease;
+    background: 
+        linear-gradient(
+            rgba(0,0,0,0.25),
+            rgba(0,0,0,0.25)
+        ),
+        url('../assets/images/snoopy.png') center / cover no-repeat fixed;
     cursor: pointer;
-    position: relative;
 }
 
 /* Fondo móvil optimizado */
@@ -74,19 +76,15 @@ body {
 
 /* Tarjeta principal */
 .card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 50px 40px;
-    border-radius: 30px;
-    box-shadow: var(--sombra), 0 0 40px rgba(255, 94, 120, 0.2);
-    max-width: 500px;
+    background: #ffffff;
+    padding: 48px 40px;
+    border-radius: 24px;
+    box-shadow: var(--shadow-soft);
+    max-width: 480px;
     width: 90%;
     text-align: center;
-    animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: 10;
+    animation: popIn 0.6s ease-out;
     position: relative;
-    border: 2px solid transparent;
-    background-clip: padding-box;
 }
 
 .card::before {
@@ -104,12 +102,12 @@ body {
 
 @keyframes popIn {
     from {
-        transform: scale(0.7) translateY(50px);
         opacity: 0;
+        transform: translateY(40px) scale(0.96);
     }
     to {
-        transform: scale(1) translateY(0);
         opacity: 1;
+        transform: translateY(0) scale(1);
     }
 }
 
@@ -124,7 +122,7 @@ body {
 
 /* Efecto de amor */
 .card.love {
-    animation: heartBeat 0.8s infinite alternate, shake 0.15s infinite alternate;
+    animation: softBeat 0.8s ease-in-out infinite alternate;
 }
 
 @keyframes heartBeat {
@@ -150,33 +148,27 @@ h1 {
     white-space: pre-line;
     font-weight: 500;
     line-height: 1.6;
-    color: #333;
-    margin-bottom: 10px;
-    font-size: clamp(1.5rem, 4vw, 2.2rem);
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    color: var(--text-main);
+    font-size: clamp(1.6rem, 4vw, 2.1rem);
+    margin-bottom: 12px;
 }
-
 /* Botones */
 .buttons {
-    margin-top: 30px;
+    margin-top: 32px;
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 16px;
     flex-wrap: wrap;
 }
 
 button {
-    padding: 18px 36px;
-    border: none;
-    border-radius: 18px;
-    font-size: 18px;
+    padding: 14px 30px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    font-weight: 600;
+    transition: all 0.25s ease;
     min-width: 140px;
-    letter-spacing: 0.5px;
-    position: relative;
-    overflow: hidden;
 }
 
 button::after {
@@ -195,20 +187,23 @@ button:hover::after {
 }
 
 .yes {
-    background: linear-gradient(135deg, var(--rosa), #ff357f);
-    color: white;
-    box-shadow: 0 8px 25px rgba(255, 94, 120, 0.4);
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 10px 25px rgba(196, 69, 91, 0.35);
 }
 
 .yes:hover {
-    transform: translateY(-5px) scale(1.08);
-    box-shadow: 0 15px 35px rgba(255, 94, 120, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(196, 69, 91, 0.45);
 }
 
 .no {
-    background: #f0f0f0;
-    color: #666;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    background: #f4f4f4;
+    color: var(--text-muted);
+}
+
+.no:hover {
+    background: #eaeaea;
 }
 
 .no:hover {
@@ -232,4 +227,5 @@ button:hover::after {
     0%, 100% { opacity: 0.5; }
     50% { opacity: 1; }
 }
+
 
