@@ -222,7 +222,7 @@ function createHearts(count = 1) {
 
 // Corazones especiales gigantes
 function createSpecialHearts(count) {
-    const specialHearts = ["💘", "💝", "💖", "💗", "💓"];
+    const specialHearts = ["💘", "💝", 🕺", "🐺", "💃"];
     
     for(let i = 0; i < count; i++) {
         setTimeout(() => {
@@ -284,6 +284,7 @@ setTimeout(() => {
     instructions.innerText = "Toca la pantalla para continuar...";
     document.body.appendChild(instructions);
 }, 1000);
+
 
 
 
