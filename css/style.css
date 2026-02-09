@@ -17,7 +17,7 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    background-image: url('../assets/images/fondo-pc.jpg');
+    background-image: url('../assets/images/snoopy.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -29,7 +29,7 @@ body {
 /* Fondo móvil optimizado */
 @media (max-width: 768px) {
     body {
-        background-image: url('../assets/images/fondo-mobile.jpg');
+        background-image: url('../assets/images/snoopy.png');
     }
 }
 
@@ -232,3 +232,4 @@ button:hover::after {
     0%, 100% { opacity: 0.5; }
     50% { opacity: 1; }
 }
+
