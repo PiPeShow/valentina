@@ -106,8 +106,8 @@ function escapeButton(btn) {
         "Nooooo!",
         "Qué haces?",
         "Creo que te equivocaste...",
-        "3 veces...",
-        "JAJAJA no",
+        "...",
+        "JAJAJAJAJAJA no",
         "No, no es una opción válida."
     ];
     btn.innerText = messages[Math.floor(Math.random() * messages.length)];
@@ -229,6 +229,7 @@ setTimeout(() => {
     instructions.innerText = "Toca la pantalla para continuar...";
     document.body.appendChild(instructions);
 }, 1000);
+
 
 
 
