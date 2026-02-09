@@ -1,5 +1,4 @@
 const texts = [
-    "Hola mi amor"
     "Pasaba por aquí para preguntarte si...",
     "Sabías que cada día me enamoro más de ti?",
     "Y que eres lo más bonito que me ha pasado?",
@@ -250,4 +249,5 @@ document.body.addEventListener(startEvent, (e) => {
         nextStep();
     }
 });
+
 
