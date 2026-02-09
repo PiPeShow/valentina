@@ -1,8 +1,8 @@
 const texts = [
-    "Hola Valentina 💕",
+    "Hola mi amor",
     "¿Sabías que cada día me enamoro más de ti?",
     "Eres lo más bonito que me ha pasado...",
-    "¿Quieres ser mi San Valentín? 💌"
+    "¿Quieres ser mi 14 de Febrero?"
 ];
 
 let step = 0;
@@ -78,22 +78,39 @@ function showButtons() {
 
 // Botón que escapa mejorado
 function escapeButton(btn) {
-    const maxX = window.innerWidth - btn.offsetWidth;
-    const maxY = window.innerHeight - btn.offsetHeight;
-    
+    // Mover el botón al body si aún no está
+    if (btn.parentElement !== document.body) {
+        const rect = btn.getBoundingClientRect();
+        document.body.appendChild(btn);
+
+        // Mantener posición visual al moverlo
+        btn.style.left = rect.left + "px";
+        btn.style.top = rect.top + "px";
+    }
+
+    btn.style.position = "fixed";
+
+    const maxX = document.documentElement.clientWidth - btn.offsetWidth - 10;
+    const maxY = document.documentElement.clientHeight - btn.offsetHeight - 10;
+
     const randomX = Math.random() * maxX;
     const randomY = Math.random() * maxY;
-    
-    btn.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.5)';
-    btn.style.position = 'fixed';
+
+    btn.style.transition = "all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.5)";
     btn.style.left = `${randomX}px`;
     btn.style.top = `${randomY}px`;
-    btn.style.zIndex = '1000';
-    
-    // Cambiar texto para divertir
-    const messages = ["¡Ay no!", "Atrapame 😜", "Ups...", "Aquí no!", "¿En serio?", "😹"];
+    btn.style.zIndex = "9999";
+
+    const messages = [
+        "Nooooo!",
+        "Qué haces?",
+        "Creo que te equivocaste...",
+        "3 veces...",
+        "JAJAJA no",
+        "No, no es una opción válida."
+    ];
     btn.innerText = messages[Math.floor(Math.random() * messages.length)];
-    
+
     playSound(clickSound, 0.2);
 }
 
@@ -112,7 +129,7 @@ function acceptLove() {
     
     // Efecto en la tarjeta
     card.classList.add("love");
-    textEl.innerHTML = "¡Sabía que dirías que sí! 🥹<br><br>Te amo con todo mi corazón, mi niña preciosa 💕<br><br><small>Nos vemos el 14 de febrero ❤️✨</small>";
+    textEl.innerHTML = "YIJAAAAAAA<br><br>Te amo con todo mi corazón, mi niña bonita<br><br><small>Nos vemos este finde❤️</small>";
     
     // Limpiar botones
     btns.innerHTML = '';
@@ -211,3 +228,4 @@ setTimeout(() => {
     instructions.innerText = "Haz clic o toca la pantalla para continuar...";
     document.body.appendChild(instructions);
 }, 1000);
+
