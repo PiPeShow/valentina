@@ -94,12 +94,12 @@ function showButtons() {
     playSound(magicSound, 0.4);
     
     btns.innerHTML = `
-        <button class="yes" onclick="acceptLove()">Siiii💖</button>
+        <button class="yes" onclick="acceptLove()">Siiii!</button>
         <button class="no" 
                 onmouseover="escapeButton(this)"
                 ontouchstart="escapeButton(this)"
                 onclick="escapeButton(this)">
-            Tal vez... 😅
+            No
         </button>
     `;
     
@@ -284,6 +284,7 @@ setTimeout(() => {
     instructions.innerText = "Toca la pantalla para continuar...";
     document.body.appendChild(instructions);
 }, 1000);
+
 
 
 
