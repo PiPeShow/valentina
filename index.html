@@ -1,204 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Valentina 💖</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
-<style>
-:root {
-  --bg-desktop: url("snoopy.png");
-}
-
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:'Poppins',sans-serif;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  overflow:hidden;
-  background-image: var(--bg-desktop);
-  background-size: cover;
-  background-position: center;
-  transition: filter 0.4s ease;
-}
-
-/* Fondo móvil */
-@media (max-width:768px){
-  body{
-    background-image: var(--bg-mobile);
-  }
-}
-
-/* Efecto apagado */
-.screen-off{
-  filter: brightness(0);
-}
-
-/* Corazones */
-.heart{
-  position:absolute;
-  animation: float 6s linear forwards;
-  pointer-events:none;
-}
-
-@keyframes float{
-  from{transform:translateY(100vh);opacity:1}
-  to{transform:translateY(-10vh);opacity:0}
-}
-
-/* Card */
-.card{
-  background:rgba(255,255,255,0.92);
-  padding:45px 35px;
-  border-radius:25px;
-  box-shadow:0 20px 50px rgba(0,0,0,.3);
-  max-width:420px;
-  width:90%;
-  text-align:center;
-  animation: pop .6s ease;
-  z-index:2;
-}
-
-@keyframes pop{
-  from{transform:scale(.8);opacity:0}
-  to{transform:scale(1);opacity:1}
-}
-
-.card.love{
-  animation: shake 0.15s infinite alternate;
-}
-
-@keyframes shake{
-  from{transform:translateX(-3px) rotate(-1deg)}
-  to{transform:translateX(3px) rotate(1deg)}
-}
-
-h1{
-  white-space:pre-line;
-  font-weight:500;
-}
-
-.buttons{margin-top:20px}
-
-button{
-  padding:14px 28px;
-  margin:10px;
-  border:none;
-  border-radius:14px;
-  font-size:16px;
-  cursor:pointer;
-  transition:.2s;
-}
-
-button:hover{
-  transform:scale(1.1);
-}
-
-.yes{
-  background:#ff5e78;
-  color:white;
-  font-weight:600;
-}
-
-.no{
-  background:#eee;
-  position:relative;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Valentina 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/images/heart.ico" type="image/x-icon">
 </head>
-
 <body>
+    <div class="card" id="card">
+        <h1 id="text">Hola Valentina 💕</h1>
+        <div class="buttons" id="buttons"></div>
+    </div>
 
-<div class="card" id="card">
-  <h1 id="text">Hola Valentina 💕</h1>
-  <div class="buttons" id="buttons"></div>
-</div>
+    <!-- Audio oculto para efectos -->
+    <audio id="clickSound" src="assets/sounds/click.mp3" preload="auto"></audio>
+    <audio id="magicSound" src="assets/sounds/magic.mp3" preload="auto"></audio>
 
-<script>
-const texts=[
- "Hola Valentina 💕",
- "¿Sabías que te amo?",
- "Te quiero preguntar algo...",
- "¿Quieres ser mi valentín? 💌"
-];
-
-let step=0;
-const textEl=document.getElementById("text");
-const btns=document.getElementById("buttons");
-const card=document.getElementById("card");
-
-/* Pantalla OFF / ON */
-function flicker(){
-  document.body.classList.add("screen-off");
-  setTimeout(()=>document.body.classList.remove("screen-off"),250);
-}
-
-function nextStep(){
-  step++;
-  if(step<texts.length){
-    flicker();
-    setTimeout(()=>textEl.innerText=texts[step],260);
-  }
-  if(step===3) showButtons();
-}
-
-function showButtons(){
-  btns.innerHTML=`
-    <button class="yes" onclick="yes()">¡Sí! 💖</button>
-    <button class="no" onmouseover="moveNo(this)">No 😿</button>
-  `;
-}
-
-function moveNo(btn){
-  btn.style.transform=`translate(${Math.random()*120-60}px,${Math.random()*60-30}px)`;
-}
-
-function yes(){
-  flicker();
-  card.classList.add("love");
-  textEl.innerText="Te amo muchito mi niña preciosa 💕\nNos vemos el 14 ❤️";
-  btns.innerHTML="";
-  explodeHearts(120);
-}
-
-/* Corazones normales */
-setInterval(()=>createHeart(),300);
-
-function createHeart(){
-  const h=document.createElement("div");
-  h.className="heart";
-  h.innerText="💖";
-  h.style.left=Math.random()*100+"vw";
-  h.style.fontSize=Math.random()*25+15+"px";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),6000);
-}
-
-/* Explosión de corazones */
-function explodeHearts(amount){
-  for(let i=0;i<amount;i++){
-    const h=document.createElement("div");
-    h.className="heart";
-    h.innerText="💘";
-    h.style.left="50vw";
-    h.style.top="50vh";
-    h.style.fontSize=Math.random()*30+20+"px";
-    h.style.animationDuration=Math.random()*3+2+"s";
-    document.body.appendChild(h);
-    setTimeout(()=>h.remove(),6000);
-  }
-}
-
-/* Click para avanzar */
-document.body.addEventListener("click",e=>{
-  if(step<3 && !e.target.closest("button")) nextStep();
-});
-</script>
-
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
