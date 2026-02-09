@@ -263,15 +263,9 @@ document.addEventListener('DOMContentLoaded', () => {
 // Lluvia inicial de corazones
 setInterval(() => createHearts(1), 500);
 
-// Click para avanzar
-document.body.addEventListener("click", (e) => {
-    if (step < texts.length && !e.target.closest("button")) {
-        nextStep();
-    }
-});
+const startEvent = "ontouchstart" in window ? "touchstart" : "click";
 
-// Toque para móviles
-document.body.addEventListener("touchstart", (e) => {
+document.body.addEventListener(startEvent, (e) => {
     if (step < texts.length && !e.target.closest("button")) {
         nextStep();
     }
@@ -284,6 +278,7 @@ setTimeout(() => {
     instructions.innerText = "Toca la pantalla para continuar...";
     document.body.appendChild(instructions);
 }, 1000);
+
 
 
 
