@@ -54,7 +54,7 @@ function showButtons() {
     playSound(magicSound, 0.4);
     
     btns.innerHTML = `
-        <button class="yes" onclick="acceptLove()">¡Claro que sí! 💖</button>
+        <button class="yes" onclick="acceptLove()">Siiii💖</button>
         <button class="no" 
                 onmouseover="escapeButton(this)"
                 ontouchstart="escapeButton(this)"
@@ -205,7 +205,7 @@ function createSpecialHearts(count) {
 }
 
 // Lluvia inicial de corazones
-setInterval(() => createHearts(1), 400);
+setInterval(() => createHearts(1), 500);
 
 // Click para avanzar
 document.body.addEventListener("click", (e) => {
@@ -225,7 +225,8 @@ document.body.addEventListener("touchstart", (e) => {
 setTimeout(() => {
     const instructions = document.createElement("div");
     instructions.className = "instructions";
-    instructions.innerText = "Haz clic o toca la pantalla para continuar...";
+    instructions.innerText = "Toca la pantalla para continuar...";
     document.body.appendChild(instructions);
 }, 1000);
+
 
