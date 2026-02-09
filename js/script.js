@@ -12,6 +12,7 @@ const btns = document.getElementById("buttons");
 const card = document.getElementById("card");
 const clickSound = document.getElementById("clickSound");
 const magicSound = document.getElementById("magicSound");
+const bgMusic = document.getElementById("bgMusic");
 
 // Pantalla OFF/ON mejorado
 function flicker() {
@@ -229,6 +230,42 @@ setTimeout(() => {
     instructions.innerText = "Toca la pantalla para continuar...";
     document.body.appendChild(instructions);
 }, 1000);
+
+// Función para iniciar música de fondo (después de la función playSound)
+function startBackgroundMusic() {
+    if (!bgMusic) return;
+    
+    // Configurar música
+    bgMusic.volume = 0.3; // Volumen bajo para no cubrir efectos
+    bgMusic.loop = true;
+    
+    // Intentar reproducir después de la primera interacción del usuario
+    const startMusic = () => {
+        bgMusic.play().catch(e => {
+            console.log("Música bloqueada inicialmente:", e);
+        });
+        
+        // Remover event listeners después del primer intento
+        document.removeEventListener('click', startMusic);
+        document.removeEventListener('touchstart', startMusic);
+    };
+    
+    // Esperar a la primera interacción del usuario
+    document.addEventListener('click', startMusic, { once: true });
+    document.addEventListener('touchstart', startMusic, { once: true });
+    
+    // También intentar iniciar en el evento de carga
+    window.addEventListener('load', () => {
+        setTimeout(startMusic, 1000);
+    }, { once: true });
+}
+
+// Función para cambiar volumen de música
+function setMusicVolume(volume) {
+    if (bgMusic) {
+        bgMusic.volume = Math.max(0, Math.min(1, volume));
+    }
+}
 
 
 
